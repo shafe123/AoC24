@@ -30,5 +30,37 @@ def part1():
 
     return len(safe_rows)
 
-print(part1())
+def part2():
+    ACTIVE_TEXT = TEXT
 
+    safe_rows = []
+    for row in ACTIVE_TEXT:
+        vals = [int(x) for x in row.split()]
+
+        # ascending check
+        if all([0 < y - x < 4 for x, y in zip(vals[::], vals[1::])]):
+            safe_rows.append(vals)
+            continue
+
+        # descending check
+        if all([0 < x - y < 4 for x, y in zip(vals[::], vals[1::])]):
+            safe_rows.append(vals)
+            continue
+
+        for index, _ in enumerate(vals):
+            copy = vals[::]
+            copy.pop(index)
+
+            # ascending check
+            if all([0 < y - x < 4 for x, y in zip(copy[::], copy[1::])]):
+                safe_rows.append(vals)
+                break
+
+            # descending check
+            if all([0 < x - y < 4 for x, y in zip(copy[::], copy[1::])]):
+                safe_rows.append(vals)
+                break
+
+    return len(safe_rows)
+
+print(part2())
