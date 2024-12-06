@@ -56,4 +56,27 @@ def check_match(grid: list[list[str]], row_offset: int, col_offset: int, pattern
                 return False
     return True
 
-print(part1())
+def part2():
+    ACTIVE_TEXT = [[char for char in line] for line in ACTUAL]
+    grid = ACTIVE_TEXT
+
+    diagonal = [
+                ['M', None, 'S'],
+                [None, 'A', None],
+                ['M', None, 'S']
+                ]
+    diagonal_right = list(zip(*diagonal[::-1]))
+    diagonal_down = list(zip(*diagonal_right[::-1]))
+    diagonal_last = list(zip(*diagonal_down[::-1]))
+
+    patterns = [diagonal, diagonal_right, diagonal_down, diagonal_last]
+
+    count = 0
+    for row, vals in enumerate(grid):
+        for col, _ in enumerate(vals):
+            for pattern in patterns:
+                if check_match(grid, row, col, pattern):
+                    count += 1
+    return count
+
+print(part2())
