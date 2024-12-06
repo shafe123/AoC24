@@ -18,5 +18,17 @@ def part1():
     matches = mul_pattern.findall(ACTIVE_TEXT)
     return sum([int(match[0]) * int(match[1]) for match in matches])
 
+def part2():
+    ACTIVE_TEXT = "".join(ACTUAL)
+    
 
-print(part1())
+    # find all dos...dont (and first and last)
+    dos_pattern = re.compile(r"(?:^|do\(\))(.*?)(?=(?:don't\(\))|$)")
+    all_matches = dos_pattern.findall(ACTIVE_TEXT)
+    final = "".join(all_matches)
+
+    mul_pattern = re.compile(r"mul\((\d{1,3}),(\d{1,3})\)")
+    matches = mul_pattern.findall(final)
+    return sum([int(match[0]) * int(match[1]) for match in matches])
+
+print(part2())
